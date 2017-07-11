@@ -1,4 +1,4 @@
-package com.mkyong;
+package com.cg;
 
 import java.util.Map;
 
