@@ -1,10 +1,31 @@
 echo 'DevOpsPOC'
 
+echo "New build pipeline"
+
 node {
-  git url: 'https://github.com/bhargav-b/DevOpsPOC.git'
-  def mvnHome = tool 'Maven'
-  // bat "${mvnHome}\\bin\\mvn -B verify"
-  bat "test.bat" // in this batch file, we will be going to the project directory executing the Java project through maven goal 
-  bat "install.bat" // this will runs a maven install goal to generate an artifact
-  step([$class: 'ArtifactArchiver', artifacts: '**/target/*.war', fingerprint: true])
+   stage 'Checkout'
+   // Get some code from repository
+   git url: 'https://github.com/bhargav-b/DevOpsPOC.git'
+
+   stage 'Build'
+   bat "test.bat"
+   
+   stage 'Generate Artifact'
+   bat "install.bat"
+   
+   stage 'Code Qulaity Analysis using Sonar'
+   bat "sonar.bat"
+   
+   stage 'Store Artifact into Jfrog'
+   def server = Artifactory.server 'JFrog'
+  
+  def uploadSpec = """{
+  "files": [
+    {
+      "pattern": "**/target/*.war",
+      "target": "example-repo-local"
+    }
+ ]
+}"""
+server.upload(uploadSpec)
 }
