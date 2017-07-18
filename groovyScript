@@ -8,13 +8,13 @@ node {
    git url: 'https://github.com/bhargav-b/DevOpsPOC.git'
 
    stage 'Build'
-   bat "test.bat"
+   bat "build.bat" // build the project
    
    stage 'Generate Artifact'
-   bat "install.bat"
+   bat "install.bat" // Generate artifact
    
    stage 'Code Qulaity Analysis using Sonar'
-   bat "sonar.bat"
+   bat "sonar.bat" // run the sonar goal
    
    stage 'Store Artifact into Jfrog'
    def server = Artifactory.server 'JFrog'
