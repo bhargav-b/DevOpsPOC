@@ -8,14 +8,26 @@ node {
    git url: 'https://github.com/bhargav-b/DevOpsPOC.git'
 
    stage 'Build'
-   bat "build.bat" // build the project
-   
+   //bat "build.bat" // build the project
+   dir('spring-boot-web-jsp') {
+    // some block
+    bat 'mvn dependency:tree'
+    }
+
    stage 'Generate Artifact'
-   bat "install.bat" // Generate artifact
+   //bat "install.bat" // Generate artifact
+   dir('spring-boot-web-jsp') {
+    // some block
+    bat 'mvn install'
+    }
    
    stage 'Code Qulaity Analysis using Sonar'
-   bat "sonar.bat" // run the sonar goal
-   
+//   bat "sonar.bat" // run the sonar goal
+    dir('spring-boot-web-jsp') {
+    // some block
+    bat 'mvn sonar:sonar'
+    }
+
    stage 'Store Artifact into Jfrog'
    def server = Artifactory.server 'JFrog'
   
