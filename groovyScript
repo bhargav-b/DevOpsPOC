@@ -40,4 +40,15 @@ node {
  ]
 }"""
 server.upload(uploadSpec)
+dir('spring-boot-web-jsp/target') {
+    bat 'copy *.war D:\\jfrog-artifactory-oss-5.4.4\\artifactory-oss-5.4.4\\data\\filestore\\POC\\Dev'
+}
+
+    stage 'Deploy Artifact to QA'
+    dir('D:\\jfrog-artifactory-oss-5.4.4\\artifactory-oss-5.4.4\\data\\filestore\\POC\\Dev') {
+    bat 'move /y *.war D:\\jfrog-artifactory-oss-5.4.4\\artifactory-oss-5.4.4\\data\\filestore\\POC\\QA'
+}
+
+ //def curlCommand = "curl -X POST -u admin:password -T \"http://localhost:8081/artifactory/example-repo-local\" \"http://localhost:8081/artifactory/QA-repo\"".execute()
+ 
 }
