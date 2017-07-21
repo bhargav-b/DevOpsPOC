@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WelcomeController {
 
-	// inject LLPP721via application.properties
+	// inject LLPP714via application.properties
 	@Value("${welcome.message:test}")
 	private String message = "Hello World";
 
